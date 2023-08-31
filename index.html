@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+    body {
+        background-color: #f8f8f8;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1 {
+        color: #333;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    p {
+        color: #555;
+        text-align: center;
+    }
+
+    form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    input[type="text"] {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 70%;
+        max-width: 400px;
+    }
+
+    button {
+        background-color: #333;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #555;
+    }
+
+    #output {
+        text-align: center;
+        margin-top: 20px;
+    }
+</style>
+
+</head>
+<body>
+    <h1>My Python App</h1>
+    <p>Enter a YouTube URL to convert:</p>
+    <form id="youtube-form">
+        <input type="text" id="video-url" placeholder="Enter YouTube URL" required>
+        <button type="submit">Convert to MP3</button>
+    </form>
+    <div id="output"></div>
+
+    <script>
+        document.getElementById('youtube-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const videoUrl = document.getElementById('video-url').value;
+            fetch(`/convert?videoUrl=${encodeURIComponent(videoUrl)}`)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('output').innerHTML = data;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('output').innerHTML = 'An error occurred.';
+                });
+        });
+    </script>
+</body>
+</html>
